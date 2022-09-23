@@ -1,0 +1,33 @@
+.container{
+    display: flex;
+    flex-flow: column wrap;
+    align-content: center;
+    justify-content: CENTER;
+}
+.grid{
+    display: flex;
+    flex-wrap: wrap;
+    border-style: solid;
+}
+.grid div {
+    width: 20px;
+    height: 20px;
+    border: 0.1px solid orange;
+    box-sizing: border-box;
+}
+.snake{
+    background-color: blue;
+}
+.apple{
+    background-color: red;
+}
+.popup{
+    background-color: gray;
+    width: 150px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.grid .gameSquares{
+}
