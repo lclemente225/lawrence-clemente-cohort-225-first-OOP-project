@@ -1,12 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const grid = document.querySelector(".grid");
+    const gameBoard = document.querySelector(".gameBoard");
     const squares = document.getElementsByClassName('gameSquares');
     const scoreDisplay = document.querySelector('span');
     const startBtn = document.querySelector('.start');
     const restartBtn = document.querySelector('.restart');
-    const makeArea = document.getElementsByClassName('make-grid')
+    const tenBtn = document.querySelector('.ten')
+    const fifteenBtn = document.querySelector('.fifteen');
+    const twentyBtn = document.querySelector('.twenty');
 
-    const width = 10;                                                                               
+                                                                                  
     let currentIndex = 0;//first div in grid
     let appleIndex = 0;//first div in grid
     let currentSnake = [2, 1, 0];//the div in our grid being 2 (or the HEAD), and 0 being the end (TAIL), all 1 is body
@@ -16,59 +18,79 @@ document.addEventListener('DOMContentLoaded', () => {
     let intervalTime = 0;
     let interval = 0;
     
-    grid.style.backgroundColor = "green";
-
+    gameBoard.style.backgroundColor = "green";
+  
     //make object constructor for the grid
-    class playArea{ constructor (width, height, area, score, rowLength) {
-        this.width = width;
-        this.height = height;
-        this.area = area;
-        this.score = score;
-        this.rowLength = Math.sqrt(this.area);
-
-    }}
-
-
-    //automate grid divs
-    let LevelOne = new playArea('200px', '200px', '100', '0');
-    grid.style.width = LevelOne.width;
-    grid.style.height = LevelOne.height;
    
-    for(let i = 0; i < 5; i++){
-    function newLevel(){        
-       // restartGame();
-       // makeGrid();
-        //startGame();
-        LevelOne.width + (50 + 'px');
-        LevelOne.height + (50 + 'px');
-        console.log('you\'re doing great')
+    class playArea{ constructor (width, rowLength, score) {         
+        this.width = width;
+        this.rowLength = rowLength;
+        this.score = score;                    
+        this.area = this.rowLength * this.rowLength;
+        this.totWidth = this.width * this.rowLength + 'px';    
     }}
-setInterval(newLevel, 2000)
+
+    
+    //automate grid divs
+
+   let LevelOne = new playArea(20, 10, 0);
+
+   tenBtn.addEventListener('click', () =>{ 
+       LevelOne = new playArea(20, 10, 0);
+       LevelOne.totWidth;
+       console.log("10x10")
+       gameBoard.style.width = LevelOne.totWidth;
+       gameBoard.style.height = LevelOne.totWidth;
+       restartGame();makeGrid();
+    });
+    
+     
+
+   fifteenBtn.addEventListener('click', () =>{ 
+       LevelOne = new playArea(20, 15, 0);
+       LevelOne.totWidth;
+       console.log("15x15")
+       gameBoard.style.width = LevelOne.totWidth;
+       gameBoard.style.height = LevelOne.totWidth;
+       restartGame(); makeGrid();
+      });
+
+
+   twentyBtn.addEventListener('click', () =>{
+       LevelOne = new playArea(20, 20, 0);
+       LevelOne.totWidth;
+       console.log("20x20")
+       gameBoard.style.width = LevelOne.totWidth;
+       gameBoard.style.height = LevelOne.totWidth;
+      restartGame(); makeGrid();
+       });
+   
+   
+    //trying to make new level
+    //trying to make all dimensions into modifiable variables
+     
+        
+        gameBoard.style.width = LevelOne.totWidth;
+        gameBoard.style.height = LevelOne.totWidth;
+        
+     
       function makeGrid(){             
         for (let i = 0; i<LevelOne.area; i++){           
             //creating divs
             let gameSquares = document.createElement("div");
             gameSquares.className = "gameSquares";
-            grid.appendChild(gameSquares);
+            gameBoard.appendChild(gameSquares);
             console.log("nice squares");            
         }}
         makeGrid();
 
-       /* TESTING  - confirmed poop.classList == 'poop' > true
-       const poop = document.createElement('div');
-        poop.classList.add = "poop";
-        grid.appendChild(poop);
-        console.log(poop.classList)
-        console.log(poop.classList == 'poop')*/
-
+    
     //start and restart game 36
-    //9/20/22 10:17AM - the inner divs(squares) have no class
-    //" 10:21AM - only shows class when adding the with the .className method 
  
     function restartGame(){
         //clear all div
-       if (grid.hasChildNodes)
-                {grid.innerHTML = "";
+       if (gameBoard.hasChildNodes)
+                {gameBoard.innerHTML = "";
         console.log("no more squares");        
        }}
     
@@ -90,12 +112,12 @@ setInterval(newLevel, 2000)
         interval = setInterval(moveOutcomes, intervalTime);    
         console.log(squares.parentNode);  
         console.log("starting YES");
-        if(score / 2 === 1){
+        if(currentSnake.length > 4){
             // restartGame();
             // makeGrid();
              //startGame();
-             LevelOne.width + (100 + 'px');
-             LevelOne.height + (100 + 'px');
+           //  LevelOne.width + (100 + 'px');
+            // LevelOne.height + (100 + 'px');
              console.log('you\'re doing great')
          }
     }
@@ -105,10 +127,10 @@ setInterval(newLevel, 2000)
 
     function moveOutcomes(){
     //deals with snake hitting the border and self
-    if((currentSnake[0] + width >= (width*width) && direction === width)|| //if snake hits bottom
-        (currentSnake[0] % width === width -1 && direction === 1)|| //if snake hits right wall
-        (currentSnake[0] % width === 0 && direction === -1)|| //if snake hits left wall
-        (currentSnake[0] - width < 0 && direction === -width)|| // if snake hits top
+    if((currentSnake[0] + LevelOne.rowLength >= (LevelOne.area) && direction === LevelOne.rowLength)|| //if snake hits bottom
+        (currentSnake[0] % LevelOne.rowLength === LevelOne.rowLength -1 && direction === 1)|| //if snake hits right wall
+        (currentSnake[0] % LevelOne.rowLength === 0 && direction === -1)|| //if snake hits left wall
+        (currentSnake[0] - LevelOne.rowLength < 0 && direction === -LevelOne.rowLength)|| // if snake hits top
         squares[currentSnake[0] + direction].classList.contains('snake')) //if snake goes into itself
         {
             console.log("Good Try Snake Tamer");      
@@ -127,7 +149,7 @@ setInterval(newLevel, 2000)
             squares[currentSnake[0]].classList.remove('apple');
             squares[tail].classList.add('snake');
             currentSnake.push(tail);
-           randomApple(); //random apple??????? how to make apple spawn?????A
+            randomApple(); //random apple??????? how to make apple spawn?????A
             score++;
             scoreDisplay.textContent = score;
             clearInterval(interval);
@@ -166,6 +188,7 @@ setInterval(newLevel, 2000)
 
 
 document.querySelector(".test").addEventListener("click", () => {console.log(squares[0])});
+
 
    document.addEventListener('keyup', control);
     startBtn.addEventListener('click', startGame); 

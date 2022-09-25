@@ -1,15 +1,18 @@
+h1{
+    text-align: center;
+}
 .container{
     display: flex;
     flex-flow: column wrap;
     align-content: center;
     justify-content: CENTER;
 }
-.grid{
+.gameBoard{
     display: flex;
     flex-wrap: wrap;
     border-style: solid;
 }
-.grid div {
+.gameBoard div {
     width: 20px;
     height: 20px;
     border: 0.1px solid orange;
@@ -23,11 +26,9 @@
 }
 .popup{
     background-color: gray;
-    width: 150px;
+    width: 200px;
     height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-.grid .gameSquares{
 }
