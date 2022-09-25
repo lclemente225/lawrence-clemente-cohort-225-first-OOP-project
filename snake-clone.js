@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentSnake = [2, 1, 0];//the div in our grid being 2 (or the HEAD), and 0 being the end (TAIL), all 1 is body
     let direction = 1; //snake will travel 1 div down the array
     let score = 0;
-    let speed = 0.9;
+    let speed = 0.95;
     let intervalTime = 0;
     let interval = 0;
     
@@ -105,21 +105,14 @@ document.addEventListener('DOMContentLoaded', () => {
         score = LevelOne.score;
         direction = 1;
         scoreDisplay.innertext = score;
-        intervalTime = 1000;
+        intervalTime = 800;
         currentSnake = [2,1,0];
         currentIndex = 0;
         currentSnake.forEach(index => squares[index].classList.add('snake'));
         interval = setInterval(moveOutcomes, intervalTime);    
         console.log(squares.parentNode);  
         console.log("starting YES");
-        if(currentSnake.length > 4){
-            // restartGame();
-            // makeGrid();
-             //startGame();
-           //  LevelOne.width + (100 + 'px');
-            // LevelOne.height + (100 + 'px');
-             console.log('you\'re doing great')
-         }
+
     }
 
 
@@ -159,18 +152,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
             squares[currentSnake[0]].classList.add('snake');
     }
-
+    let prevMove;
     //assign functions to keycodes .. start
     function control(e){
                 
         if(e.keyCode === 39){
-            direction = 1; //right arrow will make snake go right one div
+            if(prevMove == 1){return ;}
+            direction = 1;
+            prevMove = 1; //right arrow will make snake go right one div
         } else if (e.keyCode === 38){
-            direction = -LevelOne.rowLength; //up arrow will make snake go 10 divs back, appearing to go up
+            if(prevMove == -LevelOne.rowLength){return ;}
+            direction = -LevelOne.rowLength;
+            prevMove = -LevelOne.rowLength;  //up arrow will make snake go 10 divs back, appearing to go up
         }else if(e.keyCode === 37){
-            direction = -1  // left arrow will make snake go left one div
+            if(prevMove == -1){return ;}
+            direction = -1;
+            prevMove = -1;  // left arrow will make snake go left one div
         }else if(e.keyCode === 40){
-            direction = +LevelOne.rowLength; // down button then snake will go 10 divs ahead
+            if(prevMove == +LevelOne.rowLength){return ;}
+            direction = +LevelOne.rowLength;
+            prevMove =  +LevelOne.rowLength;// down button then snake will go 10 divs ahead
         }
         
     }
