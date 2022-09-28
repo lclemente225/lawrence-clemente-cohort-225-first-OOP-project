@@ -56,3 +56,6 @@ article{
     align-items: center;
     justify-content: center;
 }
+h3, span{
+    text-align: center;
+}
