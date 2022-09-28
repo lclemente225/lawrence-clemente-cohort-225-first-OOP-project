@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const gameBoard = document.querySelector(".gameBoard");
     const squares = document.getElementsByClassName('gameSquares');
-    const scoreDisplay = document.querySelector('span');
+    const scoreDisplay = document.querySelector('.score span');
     const startBtn = document.querySelector('.start');
     const restartBtn = document.querySelector('.restart');
     const tenBtn = document.querySelector('.ten')
@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let appleIndex = 0;//first div in grid
     let currentSnake = [2, 1, 0];//the div in our grid being 2 (or the HEAD), and 0 being the end (TAIL), all 1 is body
     let direction = 1; //snake will travel 1 div down the array
-    let score = 0;
     let speed = 0.95;
     let intervalTime = 0;
     let interval = 0;
@@ -30,73 +29,73 @@ document.addEventListener('DOMContentLoaded', () => {
         this.totWidth = this.width * this.rowLength + 'px';    
     }}
 
+     //trying to make new level
+    //trying to make all dimensions into modifiable variables
     
-    //automate grid divs
+  let LevelOne = new playArea(20, 10, 0);
+   
+   function gridSize (x){
+       switch(x){
+           case 10:
+            LevelOne = new playArea(20, 10, 0);
+            console.log('10x10');
+            break;
 
-   let LevelOne = new playArea(20, 10, 0);
+            case 15:
+            LevelOne = new playArea(20, 15, 0);
+            console.log('15x15');
+            break;
 
-   tenBtn.addEventListener('click', () =>{ 
-       LevelOne = new playArea(20, 10, 0);
-       LevelOne.totWidth;
-       console.log("10x10")
+            case 20:
+            LevelOne = new playArea(20, 20, 0);
+            console.log('20x20');
+        }
        gameBoard.style.width = LevelOne.totWidth;
        gameBoard.style.height = LevelOne.totWidth;
        restartGame();makeGrid();
-    });
-    
+    }
+
+
+   tenBtn.addEventListener('click', ()=>(gridSize(10)))   
+   tenBtn.addEventListener('click', console.log(10));
      
 
-   fifteenBtn.addEventListener('click', () =>{ 
-       LevelOne = new playArea(20, 15, 0);
-       LevelOne.totWidth;
-       console.log("15x15")
-       gameBoard.style.width = LevelOne.totWidth;
-       gameBoard.style.height = LevelOne.totWidth;
-       restartGame(); makeGrid();
-      });
+   fifteenBtn.addEventListener('click', ()=>{gridSize(15)});
+   fifteenBtn.addEventListener('click', console.log(15));
 
 
-   twentyBtn.addEventListener('click', () =>{
-       LevelOne = new playArea(20, 20, 0);
-       LevelOne.totWidth;
-       console.log("20x20")
-       gameBoard.style.width = LevelOne.totWidth;
-       gameBoard.style.height = LevelOne.totWidth;
-      restartGame(); makeGrid();
-       });
-   
-   
-    //trying to make new level
-    //trying to make all dimensions into modifiable variables
+   twentyBtn.addEventListener('click', ()=>{gridSize(20)});
+   twentyBtn.addEventListener('click', console.log(20));
+
      
-        
+      //this makes a board/grid size before changing it > default 10x10  
         gameBoard.style.width = LevelOne.totWidth;
         gameBoard.style.height = LevelOne.totWidth;
+
+        function restartGame(){
+            //clear all div
+           if (gameBoard.hasChildNodes)
+                    {gameBoard.innerHTML = "";
+                    gameBoard.classList.remove("snake");
+                    gameBoard.classList.remove("apple");
+            console.log("no more squares");             
+            clearInterval(interval);       
+           }}
         
-     
+     //automate grid div creation
       function makeGrid(){             
         for (let i = 0; i<LevelOne.area; i++){           
             //creating divs
             let gameSquares = document.createElement("div");
             gameSquares.className = "gameSquares";
-            gameBoard.appendChild(gameSquares);
-            console.log("nice squares");            
+            gameBoard.appendChild(gameSquares);     
         }}
         makeGrid();
 
     
     //start and restart game 36
  
-    function restartGame(){
-        //clear all div
-       if (gameBoard.hasChildNodes)
-                {gameBoard.innerHTML = "";
-        console.log("no more squares");        
-       }}
-    
-    restartBtn.addEventListener("click", restartGame);
-    restartBtn.addEventListener("click", makeGrid);
-
+  
     function startGame() {
         currentSnake.forEach(index => squares[index].classList.remove('snake'));//error can't read properties squares is not holding anything in the array
         squares[appleIndex].classList.remove('apple');
@@ -105,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         score = LevelOne.score;
         direction = 1;
         scoreDisplay.innertext = score;
-        intervalTime = 800;
+        intervalTime = 500;
         currentSnake = [2,1,0];
         currentIndex = 0;
         currentSnake.forEach(index => squares[index].classList.add('snake'));
@@ -126,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         (currentSnake[0] - LevelOne.rowLength < 0 && direction === -LevelOne.rowLength)|| // if snake hits top
         squares[currentSnake[0] + direction].classList.contains('snake')) //if snake goes into itself
         {
-            console.log("Good Try Snake Tamer");      
+            alert("Good Try Snake Tamer");      
             
             return clearInterval(interval);//clears interval is any of the above happens
         }
@@ -135,6 +134,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const tail = currentSnake.pop();
         squares[tail].classList.remove('snake');
         currentSnake.unshift(currentSnake[0] + direction); 
+        console.log(direction);
+
+  
+        
+        restartBtn.addEventListener("click", restartGame);
+        restartBtn.addEventListener("click", makeGrid);
 
 
      //deals with snake getting apple
@@ -152,26 +157,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
             squares[currentSnake[0]].classList.add('snake');
     }
-    let prevMove;
     //assign functions to keycodes .. start
     function control(e){
                 
         if(e.keyCode === 39){
-            if(prevMove == 1){return ;}
-            direction = 1;
-            prevMove = 1; //right arrow will make snake go right one div
+            e.keycode !== -37;
+            direction = 1; //right arrow will make snake go right one div
         } else if (e.keyCode === 38){
-            if(prevMove == -LevelOne.rowLength){return ;}
-            direction = -LevelOne.rowLength;
-            prevMove = -LevelOne.rowLength;  //up arrow will make snake go 10 divs back, appearing to go up
+            e.keycode !== 40;
+            direction = -LevelOne.rowLength;//up arrow will make snake go 10 divs back, appearing to go up
         }else if(e.keyCode === 37){
-            if(prevMove == -1){return ;}
-            direction = -1;
-            prevMove = -1;  // left arrow will make snake go left one div
+            e.keycode !== 39;
+            direction = -1; // left arrow will make snake go left one div
         }else if(e.keyCode === 40){
-            if(prevMove == +LevelOne.rowLength){return ;}
-            direction = +LevelOne.rowLength;
-            prevMove =  +LevelOne.rowLength;// down button then snake will go 10 divs ahead
+            e.keycode !== 38;
+            direction = +LevelOne.rowLength;// down button then snake will go 10 divs ahead
         }
         
     }
@@ -185,11 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
     while(squares[appleIndex].classList.contains('snake'));// making sure apples don't appear on snake
     squares[appleIndex].classList.add("apple");
 }
-
-
-
-document.querySelector(".test").addEventListener("click", () => {console.log(squares[0])});
-
 
    document.addEventListener('keyup', control);
     startBtn.addEventListener('click', startGame); 
