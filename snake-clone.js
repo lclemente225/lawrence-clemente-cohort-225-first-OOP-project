@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
  
   
     function startGame() {
-        currentSnake.forEach(index => squares[index].classList.remove('snake'));//error can't read properties squares is not holding anything in the array
+        currentSnake.forEach(index => squares[index].classList.remove('snake'));
         squares[appleIndex].classList.remove('apple');
         clearInterval(interval);
         randomApple();
@@ -157,7 +157,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             squares[currentSnake[0]].classList.add('snake');
     }
-    //assign functions to keycodes .. start
+    //assign functions to keycodes .. start 
+    //can't figure out how to not run into self
     function control(e){
                 
         if(e.keyCode === 39){
