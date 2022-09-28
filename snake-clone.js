@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
        gameBoard.style.width = LevelOne.totWidth;
        gameBoard.style.height = LevelOne.totWidth;
+       scoreDisplay.textContent = 0;
        restartGame();makeGrid();
     }
 
@@ -79,7 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     gameBoard.classList.remove("snake");
                     gameBoard.classList.remove("apple");
             console.log("no more squares");             
-            clearInterval(interval);       
+            clearInterval(interval); 
+            scoreDisplay.textContent = 0;
            }}
         
      //automate grid div creation
@@ -125,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
         (currentSnake[0] - LevelOne.rowLength < 0 && direction === -LevelOne.rowLength)|| // if snake hits top
         squares[currentSnake[0] + direction].classList.contains('snake')) //if snake goes into itself
         {
-            alert("Good Try Snake Tamer");      
+            console.log("Good Try Snake Tamer");      
             
             return clearInterval(interval);//clears interval is any of the above happens
         }
