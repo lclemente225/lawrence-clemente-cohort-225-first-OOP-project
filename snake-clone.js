@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
             //creating divs
             let gameSquares = document.createElement("div");
             gameSquares.className = "gameSquares";
-            gameBoard.appendChild(gameSquares);     
+            gameBoard.appendChild(gameSquares);
         }}
         makeGrid();
 
