@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         this.rowLength = rowLength;
         this.score = score;                    
         this.area = this.rowLength * this.rowLength;
-        this.totWidth = this.width * this.rowLength + 'px';    
+        this.totRowLength = this.width * this.rowLength + 'px';    
     }}
 
      //trying to make new level
@@ -50,8 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
             LevelOne = new playArea(20, 20, 0);
             console.log('20x20');
         }
-       gameBoard.style.width = LevelOne.totWidth;
-       gameBoard.style.height = LevelOne.totWidth;
+       gameBoard.style.width = LevelOne.totRowLength;
+       gameBoard.style.height = LevelOne.totRowLength;
        scoreDisplay.textContent = 0;
        restartGame();makeGrid();
     }
@@ -69,10 +69,11 @@ document.addEventListener('DOMContentLoaded', () => {
    twentyBtn.addEventListener('click', console.log(20));
 
      
-      //this makes a board/grid size before changing it > default 10x10  
-        gameBoard.style.width = LevelOne.totWidth;
-        gameBoard.style.height = LevelOne.totWidth;
+      //this makes a board/grid size before changing it --> default 10x10  
+        gameBoard.style.width = LevelOne.totRowLength;
+        gameBoard.style.height = LevelOne.totRowLength;
 
+    //restart game
         function restartGame(){
             //clear all div
            if (gameBoard.hasChildNodes)
@@ -84,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             scoreDisplay.textContent = 0;
            }}
         
-     //automate grid div creation
+    //automate grid div creation
       function makeGrid(){             
         for (let i = 0; i<LevelOne.area; i++){           
             //creating divs
@@ -95,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
         makeGrid();
 
     
-    //start and restart game 36
+    //start game
  
   
     function startGame() {
@@ -149,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
             squares[currentSnake[0]].classList.remove('apple');
             squares[tail].classList.add('snake');
             currentSnake.push(tail);
-            randomApple(); //random apple??????? how to make apple spawn?????A
+            randomApple(); 
             score++;
             scoreDisplay.textContent = score;
             clearInterval(interval);
@@ -158,25 +159,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             squares[currentSnake[0]].classList.add('snake');
-    }
-    //assign functions to keycodes .. start 
-    //can't figure out how to not run into self
-    function control(e){
-                
-        if(e.keyCode === 39){
+    }//moveOutcomes function ends here
+
+
+    //assign functions to keycodes start 
+    function control(e){                
+        if(e.keyCode === 39 && direction !== -1){//right arrow will make snake go right one div
             e.keycode !== -37;
-            direction = 1; //right arrow will make snake go right one div
-        } else if (e.keyCode === 38){
+            direction = 1;             
+        } else if (e.keyCode === 38 && direction !== LevelOne.rowLength){//up arrow will make snake go 10 divs back, appearing to go up
             e.keycode !== 40;
-            direction = -LevelOne.rowLength;//up arrow will make snake go 10 divs back, appearing to go up
-        }else if(e.keyCode === 37){
+            direction = -LevelOne.rowLength;
+        }else if(e.keyCode === 37 && direction !== 1){// left arrow will make snake go left one div
             e.keycode !== 39;
-            direction = -1; // left arrow will make snake go left one div
-        }else if(e.keyCode === 40){
+            direction = -1; 
+        }else if(e.keyCode === 40 && direction !== -LevelOne.rowlength){// down button then snake will go 10 divs ahead
             e.keycode !== 38;
-            direction = +LevelOne.rowLength;// down button then snake will go 10 divs ahead
+            direction = +LevelOne.rowLength;
         }
-        
+        console.log(e);
     }
  
     
@@ -189,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
     squares[appleIndex].classList.add("apple");
 }
 
-   document.addEventListener('keyup', control);
+    document.addEventListener('keyup', control);
     startBtn.addEventListener('click', startGame); 
  })
 
