@@ -1,11 +1,12 @@
 h1{
     text-align: center;
 }
-article{
+/* article{
     float: left;
-}
+} */
 #game{
     display: flex;
+    justify-items: center;
 }
 #controls{
     flex: 1 2 10vw;
@@ -15,7 +16,6 @@ article{
 }
 #gameArea{
     justify-self: center;
-    flex: 5 5 66vw;
     /* border: solid 0.1px red; */
 }
 #placeholder{
@@ -48,14 +48,26 @@ article{
 .apple{
     background-color: red;
 }
+h3, span{
+    text-align: center;
+}
+
+
 .popup{
-    background-color: gray;
+    background-color:  gray;
     width: 200px;
     height: 100px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
 }
-h3, span{
+.button .controls{
     text-align: center;
+    justify-content: space-evenly;
+    background-color: lightgray;
+}
+.container .direction{
+    justify-content: space-evenly;
+
 }

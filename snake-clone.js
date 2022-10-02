@@ -52,12 +52,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
        gameBoard.style.width = LevelOne.totRowLength;
        gameBoard.style.height = LevelOne.totRowLength;
+
        scoreDisplay.textContent = 0;
        restartGame();makeGrid();
     }
 
 
-   tenBtn.addEventListener('click', ()=>(gridSize(10)))   
+   tenBtn.addEventListener('click', ()=>(gridSize(10)));  
    tenBtn.addEventListener('click', console.log(10));
      
 
@@ -70,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
      
       //this makes a board/grid size before changing it --> default 10x10  
-        gameBoard.style.width = LevelOne.totRowLength;
+       gameBoard.style.width = LevelOne.totRowLength;
         gameBoard.style.height = LevelOne.totRowLength;
 
     //restart game
@@ -78,8 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
             //clear all div
            if (gameBoard.hasChildNodes)
                     {gameBoard.innerHTML = "";
-                    gameBoard.classList.remove("snake");
-                    gameBoard.classList.remove("apple");
             console.log("no more squares");             
             clearInterval(interval); 
             scoreDisplay.textContent = 0;
@@ -128,11 +127,10 @@ document.addEventListener('DOMContentLoaded', () => {
         (currentSnake[0] - LevelOne.rowLength < 0 && direction === -LevelOne.rowLength)|| // if snake hits top
         squares[currentSnake[0] + direction].classList.contains('snake')) //if snake goes into itself
         {
-            console.log("Good Try Snake Tamer");      
-            
+            console.log("Good Try Snake Tamer");                  
             return clearInterval(interval);//clears interval is any of the above happens
         }
-
+    
         //make snake move forward
         const tail = currentSnake.pop();
         squares[tail].classList.remove('snake');
@@ -166,18 +164,21 @@ document.addEventListener('DOMContentLoaded', () => {
     function control(e){                
         if(e.keyCode === 39 && direction !== -1){//right arrow will make snake go right one div
             e.keycode !== -37;
-            direction = 1;             
+            direction = 1;    
+            console.log('right'); 
         } else if (e.keyCode === 38 && direction !== LevelOne.rowLength){//up arrow will make snake go 10 divs back, appearing to go up
             e.keycode !== 40;
             direction = -LevelOne.rowLength;
+            console.log('up');
         }else if(e.keyCode === 37 && direction !== 1){// left arrow will make snake go left one div
             e.keycode !== 39;
             direction = -1; 
+            console.log('left');
         }else if(e.keyCode === 40 && direction !== -LevelOne.rowlength){// down button then snake will go 10 divs ahead
             e.keycode !== 38;
             direction = +LevelOne.rowLength;
+            console.log('down');
         }
-        console.log(e);
     }
  
     
@@ -192,5 +193,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('keyup', control);
     startBtn.addEventListener('click', startGame); 
+
+    const up = document.querySelector(".up");
+    const right = document.querySelector(".right");
+    const down = document.querySelector(".down");
+    const left = document.querySelector(".left");
+
+     up.addEventListener("click",()=>butControl(up))
+     right.addEventListener("click",()=>butControl(right))
+     down.addEventListener("click", ()=>butControl(down))
+     left.addEventListener("click", ()=>butControl(left))
+    
+    function butControl(e){
+        if (e == up && direction !== LevelOne.rowLength){
+            direction = -LevelOne.rowLength;
+            console.log('up');
+            console.log(direction);
+        }
+        else if (e == right && direction !== -1){
+            direction = 1;
+            console.log('right');
+            console.log(direction);
+        }
+        else if (e == down && direction !== -LevelOne.rowLength){
+            direction = +LevelOne.rowLength; 
+            console.log('down');
+            console.log(direction);
+        }
+        else if (e == left && direction !== 1){
+            direction = -1;
+            console.log('left');
+            console.log(direction);
+        }
+    }
+
+
  })
 
